@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .form-container {
+        background-color: orange; /* Set background color to orange */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: 0px 0px 10px 2px rgba(0, 0, 255, 0.5); /* Blue box shadow */
+        padding: 20px; /* Padding inside the div */
+        max-width: 600px; /* Maximum width of the form */
+        margin: 20px auto; /* Center the form container */
+    }
+
+    h1 {
+        text-align: center; /* Center the header text */
+    }
+
+    fieldset {
+        border: 1px solid #ccc; /* Border for fieldset */
+        padding: 10px; /* Padding inside fieldset */
+    }
+
+    label {
+        display: block; /* Block display for labels */
+        margin: 10px 0 5px; /* Margin for spacing */
+    }
+
+    input[type="text"], input[type="number"], textarea {
+        width: 100%; /* Full width for inputs and textarea */
+        padding: 10px; /* Padding for inputs */
+        border-radius: 4px; /* Rounded corners for inputs */
+        border: 1px solid #ccc; /* Border for inputs */
+        margin-bottom: 15px; /* Space below inputs */
+    }
+
+    button {
+        background-color: blue; /* Button background color */
+        color: white; /* Button text color */
+        border: none; /* No border */
+        padding: 10px 15px; /* Padding inside the button */
+        border-radius: 4px; /* Rounded corners for button */
+        cursor: pointer; /* Pointer cursor on hover */
+        display: block; /* Center button */
+        margin: 0 auto; /* Center button */
+    }
+
+    button:hover {
+        background-color: darkblue; /* Darken button on hover */
+    }
+</style>
+
+<div class="form-container">
+    <h1>Edit Meal</h1>
+    <form method="post">
+        {% csrf_token %}
+        <fieldset>
+            <div>
+                <label for="meal_name">Meal Name:</label>
+                <input type="text" id="meal_name" name="meal_name" value="{{ meal.meal_name }}" required>
+            </div>
+            <div>
+                <label for="meal_description">Description:</label>
+                <textarea id="meal_description" name="meal_description" required>{{ meal.meal_description }}</textarea>
+            </div>
+            <div>
+                <label for="meal_price">Price:</label>
+                <input type="number" id="meal_price" name="meal_price" value="{{ meal.meal_price }}" required>
+            </div>
+            <button type="submit">Save Changes</button>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

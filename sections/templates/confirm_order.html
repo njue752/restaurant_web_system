@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 600px; margin: auto;">
+    <h2>Confirm Your Order</h2>
+    <h3>{{ meal.meal_name }}</h3>
+    <img src="{{ meal.meal_image.url }}" alt="{{ meal.meal_name }}" style="width: 100%; height: auto; margin-bottom: 20px;">
+    <p>{{ meal.meal_description }}</p>
+    <p><strong>Price:</strong> Ksh {{ meal.meal_price }}</p>
+
+    <form method="post" action="{% url 'confirm_order' %}" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <div style="margin-bottom: 15px;">
+            <label for="latitude">Latitude:</label>
+            <input type="text" id="latitude" name="latitude" readonly style="width: 100%; padding: 10px; margin-bottom: 10px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="longitude">Longitude:</label>
+            <input type="text" id="longitude" name="longitude" readonly style="width: 100%; padding: 10px; margin-bottom: 10px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="delivery_date">Delivery Date:</label>
+            <input type="date" id="delivery_date" name="delivery_date" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="delivery_time">Delivery Time:</label>
+            <input type="time" id="delivery_time" name="delivery_time" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+        </div>
+
+        <button type="button" onclick="getLocation()" style="padding: 10px 20px; margin-bottom: 15px;">
+            Get My Location
+        </button>
+
+        <button type="submit" style="padding: 10px 20px; background-color: green; color: white; border: none; cursor: pointer;">
+            Confirm Order
+        </button>
+    </form>
+</div>
+
+<script>
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                document.getElementById('latitude').value = latitude;
+                document.getElementById('longitude').value = longitude;
+            },
+            (error) => {
+                console.error(`Error occurred. Error code: ${error.code}`);
+                alert(`Geolocation service failed.`);
+            }
+        );
+    } else {
+        alert("Your browser doesn't support geolocation.");
+    }
+}
+
+// Function to validate form before submission
+function validateForm() {
+    const phoneNumber = document.getElementById('phone_number').value;
+    if (!phoneNumber.match(/^\d{10}$/)) {
+        alert("Please enter a valid 10-digit phone number.");
+        return false;
+    }
+    return true;
+}
+</script>
+{% endblock %}

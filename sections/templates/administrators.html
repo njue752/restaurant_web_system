@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="
+    background-color: orange; /* Orange background */
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 255, 0.5); /* Blue box shadow */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding inside the div */
+    margin: 20px auto; /* Center the div */
+    max-width: 800px; /* Max width for larger screens */
+">
+    <h1>Administrators Dashboard</h1>
+
+    <a href="{% url 'view_users' %}" style="padding: 10px; background-color: cyan; color: white; text-decoration: none; display: inline-block; margin-bottom: 10px;">
+        View Users
+    </a>
+
+    <a href="{% url 'view_meals' %}" style="padding: 10px; background-color: cyan; color: white; text-decoration: none; display: inline-block; margin-bottom: 10px;">
+        View All Meals
+    </a>
+
+    <a href="{% url 'view_booked_services' %}" style="padding: 10px; background-color: cyan; color: white; text-decoration: none; display: inline-block;">
+        View Booked Services
+    </a>
+</div>
+{% endblock %}

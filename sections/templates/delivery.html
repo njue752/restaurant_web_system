@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .dashboard-container {
+        background-color: orange; /* Orange background for the dashboard */
+        box-shadow: 0px 0px 10px 2px rgba(0, 0, 255, 0.5); /* Blue box shadow */
+        border-radius: 8px; /* Rounded corners */
+        padding: 20px; /* Padding around the content */
+        max-width: 600px; /* Maximum width for the container */
+        margin: auto; /* Center the container on the page */
+        text-align: center; /* Center align the text and buttons */
+    }
+
+    .dashboard-container button {
+        background-color: cyan; /* Cyan color for buttons */
+        color: black; /* Text color for buttons */
+        border: none; /* No border */
+        border-radius: 4px; /* Rounded corners for buttons */
+        padding: 10px 20px; /* Padding for buttons */
+        margin: 10px 0; /* Margin above and below buttons */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-weight: bold; /* Bold text for buttons */
+    }
+
+    .dashboard-container button:hover {
+        background-color: lightblue; /* Lighter blue on hover */
+    }
+
+    .btn-primary {
+        background-color: cyan; /* Ensure the primary button is also cyan */
+        color: black; /* Text color for the primary button */
+    }
+</style>
+
+<div class="dashboard-container">
+    <h1>Delivery User Dashboard</h1>
+    <a href="{% url 'add_meal' %}" class="btn btn-primary">Add a Meal</a>
+
+    <!-- Button to view booked services -->
+    <a href="{% url 'booked_services' %}">
+        <button>View Booked Services</button>
+    </a>
+
+    <!-- View Menus Button -->
+    <a href="{% url 'menu_page' %}">
+        <button>View Menus</button>
+    </a>
+</div>
+
+{% endblock %}

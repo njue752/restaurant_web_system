@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="
+    background-color: orange; /* Orange background */
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 255, 0.5); /* Blue box shadow */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Padding inside the div */
+    margin: 20px auto; /* Center the div */
+    max-width: 800px; /* Max width for larger screens */
+">
+    <h1 style="text-align: center;">Registered Users</h1>
+
+    <!-- Print Button -->
+    <button onclick="window.print()" style="padding: 10px 20px; background-color: blue; color: white; border: none; cursor: pointer; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto;">
+        Print
+    </button>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <form method="post" action="{% url 'delete_user' user.id %}">
+                            {% csrf_token %}
+                            <button type="submit" style="color: red;">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No registered users available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

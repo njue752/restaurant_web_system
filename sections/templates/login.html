@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <style>
+        /* Center the form */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+
+        /* Style the form */
+        .login-form {
+            width: 300px;  /* Adjust width for a small size */
+            background-color: orange;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 255, 0.5); /* Blue box shadow */
+        }
+
+        /* Fieldset styling */
+        .login-form fieldset {
+            border: none;
+            padding: 0;
+        }
+
+        /* Form heading */
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        /* Style form fields */
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Submit button styling */
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .login-form button:hover {
+            background-color: darkblue;
+        }
+
+        /* Error styling */
+        .login-form .error {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Sign up text styling */
+        .signup-link {
+            text-align: center;
+            margin-top: 15px;
+            color: white; /* Text color */
+        }
+
+        .signup-link a {
+            color: white; /* Link color */
+            text-decoration: underline; /* Underline the link */
+        }
+    </style>
+
+    <div class="login-container">
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            <fieldset>
+                <h2>Login Here</h2>
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </fieldset>
+            {% if form.non_field_errors %}
+                <div class="error">{{ form.non_field_errors }}</div>
+            {% endif %}
+            <div class="signup-link">
+                <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

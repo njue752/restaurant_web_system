@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .payment-form {
+        max-width: 300px; /* Set the max width to half of the previous width */
+        margin: auto; /* Center the form on the page */
+        padding: 20px; /* Add padding around the content */
+        background-color: orange; /* Orange background for the form */
+        box-shadow: 0px 0px 10px 2px rgba(0, 0, 255, 0.5); /* Blue box shadow */
+        border-radius: 8px; /* Rounded corners */
+    }
+
+    .payment-form fieldset {
+        border: none; /* Remove default border */
+        padding: 0; /* Remove default padding */
+    }
+
+    .payment-form label {
+        display: block; /* Make labels block elements */
+        margin-bottom: 5px; /* Space between label and input */
+    }
+
+    .payment-form input[type="text"] {
+        width: 100%; /* Full width of the input field */
+        padding: 10px; /* Padding for the input */
+        margin-bottom: 15px; /* Space below input fields */
+        border-radius: 4px; /* Rounded corners for inputs */
+        border: 1px solid #ddd; /* Border style for input fields */
+    }
+
+    .payment-form button {
+        padding: 10px 20px; /* Padding for button */
+        background-color: green; /* Green background for button */
+        color: white; /* White text for button */
+        border: none; /* No border */
+        border-radius: 4px; /* Rounded corners for button */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-weight: bold; /* Bold text for button */
+    }
+
+    .payment-form button:hover {
+        background-color: darkgreen; /* Darker green on hover */
+    }
+</style>
+
+<h2 style="text-align: center">Payment for {{ meal.meal_name }}</h2>  <!-- Updated to use meal_name -->
+<p style="text-align: center">Price: KES {{ meal.meal_price }}</p>  <!-- Updated to use meal_price -->
+
+<div class="payment-form"> <!-- Added a wrapper for the form -->
+    <form method="post" action="{% url 'darajaapi' meal.id %}">
+        {% csrf_token %}
+        <fieldset>
+            <div style="margin-bottom: 15px;">
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" required>
+            </div>
+            <button type="submit">
+                Confirm Payment
+            </button>
+        </fieldset>
+    </form>
+</div>
+
+{% endblock %}

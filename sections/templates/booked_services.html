@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: orange; /* Set the body background color to orange */
+    }
+
+    @media print {
+        /* Hide elements that shouldn't be printed */
+        button {
+            display: none; /* Hide the print button */
+        }
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .container {
+        background-color: orange; /* Set the div background color to orange */
+        box-shadow: 0px 0px 10px 2px rgba(0, 0, 255, 0.5); /* Blue box shadow */
+        border-radius: 8px; /* Rounded corners */
+        padding: 20px; /* Padding inside the div */
+        margin: 20px auto; /* Center the div */
+        max-width: 1000px; /* Max width for the div */
+    }
+
+    .print-button {
+        padding: 10px 20px;
+        background-color: blue; /* Blue background for the print button */
+        color: white; /* White text color */
+        border: none; /* No border */
+        cursor: pointer; /* Pointer cursor on hover */
+        margin-bottom: 20px; /* Margin below the button */
+    }
+</style>
+
+<div class="container">
+    <h1 style="text-align: center;">Booked Services</h1>
+    <button onclick="printPage()" class="print-button">Print this page</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Service Name</th>
+                <th>Phone Number</th>
+                <th>Appointment Date</th>
+                <th>Payment Status</th>
+                <th>Location (Latitude, Longitude)</th>
+                <th>Actions</th> <!-- Add a header for the actions -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.user.username }}</td>  <!-- User Name -->
+                    <td>{{ appointment.meal.meal_name }}</td>  <!-- Service Name -->
+                    <td>{{ appointment.phone_number }}</td>     <!-- Phone Number -->
+                    <td>{{ appointment.appointment_date }}</td> <!-- Appointment Date -->
+                    <td>{{ appointment.payment_status }}</td>   <!-- Payment Status -->
+                    <td>{{ appointment.latitude }}, {{ appointment.longitude }}</td> <!-- Location -->
+                    <td>
+                        <form method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                            <button type="submit" formaction="{% url 'delete_appointment' appointment.id %}" style="color: red;">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">No booked services available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function printPage() {
+        window.print(); // This will open the print dialog
+    }
+</script>
+{% endblock %}

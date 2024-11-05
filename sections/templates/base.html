@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wema Hotel</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/css/bootstrap.min.css' %}">
+    <!-- Add Toastify CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.11.2/Toastify.min.css">
+
+    <!-- Add Toastify JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastify-js/1.11.2/Toastify.min.js"></script>
+
+    <style>
+        html, body {
+            height: 100%; /* Ensure the body takes the full height */
+            margin: 0; /* Remove default margin */
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Stack children vertically */
+        }
+
+        /* Make the main content area grow to fill space */
+        .content {
+            flex: 1; /* Allow the content to grow */
+        }
+
+        /* Style for the navbar items */
+        .navbar-nav .nav-link {
+            color: orange !important; /* Set navbar text color to orange */
+        }
+
+        /* Style for the footer */
+        footer {
+            background-color: peachpuff; /* Set footer background color to peachpuff */
+            color: blue; /* Set footer text color to blue */
+            padding: 10px 0; /* Add padding for better spacing */
+            text-align: center; /* Center text in footer */
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-sm bg-primary mb-3">
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% if user.is_authenticated %}
+                    {% if user.is_customer %}
+                        {% url 'index' %}  {# Ensure this URL name is correct in urls.py #}
+                    {% elif user.is_delivery %}
+                        {% url 'delivery' %}  {# Ensure this URL name is correct in urls.py #}
+                    {% elif user.is_administrator %}
+                        {% url 'administrators' %}  {# Ensure this URL name is correct in urls.py #}
+                    {% else %}
+                        {% url 'index' %}
+                    {% endif %}
+                {% else %}
+                    {% url 'index' %}
+                {% endif %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="content">
+    {% block content %}
+    <!-- Default content can be added here if needed -->
+    {% endblock %}
+</div>
+
+<footer>
+    &copy; Wema Hotel. All Rights Reserved. 2024.
+</footer>
+
+<script src="{% static 'css/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
